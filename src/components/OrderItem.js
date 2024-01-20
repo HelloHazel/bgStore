@@ -1,25 +1,25 @@
-import { useStore } from "../store";
-import styled from "styled-components";
+import { useStore } from '../store';
+import styled from 'styled-components';
 
 const Container = styled.div`
   display: grid;
   grid-template-columns: auto 1fr auto 1fr;
-  grid-template-rows: auto; 
+  grid-template-rows: auto;
   grid-template-areas:
-    "image item item item"
-    "image quantity quantity price";
+    'image item item item'
+    'image quantity quantity price';
   grid-gap: 1rem;
   align-items: center;
-  padding: 0 0.5rem;
+  padding: 0.5rem;
   margin: 10px;
   border: 2px solid #ccc;
   border-radius: 16px;
-  background-color: ${({ count }) => (count > 0 ? "#FEEEEA" : "#fff")}; /* 조건에 따라 배경색 변경 */
+  background-color: ${({ count }) => (count > 0 ? '#FEEEEA' : '#fff')}; /* 조건에 따라 배경색 변경 */
 
   @media (min-width: 768px) {
     grid-template-columns: repeat(7, 1fr);
     grid-template-rows: auto;
-    grid-template-areas: "image item item item quantity quantity price price";
+    grid-template-areas: 'image item item item quantity quantity price price';
   }
 `;
 
@@ -35,6 +35,7 @@ const ItemName = styled.h2`
   font-size: 1rem;
   font-weight: bold;
   color: #333;
+  align-self: flex-start; /* 수정: item을 위로 정렬 */
 `;
 
 const EventBadge = styled.span`
@@ -51,11 +52,12 @@ const QuantityContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: start;
+  justify-content: flex-start; /* 수정: quantity를 위로 정렬 */
 `;
 
 const QuantityText = styled.p`
   font-size: 1rem;
+  margin: 0; /* 수정: 기본 마진 제거 */
 `;
 
 const Button = styled.button`
@@ -63,15 +65,16 @@ const Button = styled.button`
   font-size: 1rem;
   padding: 0.5rem 1rem;
   cursor: pointer;
-  background-color: transparent; 
+  background-color: transparent;
 `;
 
 const Price = styled.div`
   grid-area: price;
   font-size: 1rem;
+  align-self: center;
 `;
 
-const OrderItem = ({ id, name, price, count, event, totalPrice }) => {
+const OrderItem = ({ id, name, price, count, event }) => {
   const { increaseQuantity, decreaseQuantity, getAllCountAndPrice } = useStore();
 
   const handleIncrease = () => {
